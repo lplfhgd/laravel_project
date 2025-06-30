@@ -79,15 +79,6 @@
         </div>
     </main>
 
-    <!-- تذييل الصفحة -->
-    <footer class="bg-white shadow-lg mt-8">
-        <div class="max-w-7xl mx-auto px-4 py-4">
-            <div class="text-center text-gray-600">
-                <p>جميع الحقوق محفوظة &copy; {{ date('Y') }} - نظام إدارة المهام</p>
-                <p class="text-sm mt-2">الإصدار: 1.0.0</p>
-            </div>
-        </div>
-    </footer>
 
     @stack('scripts')
 </body>
