@@ -6,17 +6,13 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
-    /**
-     * قائمة الـ Middleware العامة التي يتم تطبيقها على كل الطلبات
-     */
+
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
-    /**
-     * مجموعات الـ Middleware
-     */
+
     protected $middlewareGroups = [
         'web' => [
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
@@ -31,9 +27,7 @@ class Kernel extends HttpKernel
         ],
     ];
 
-    /**
-     * Middleware المسارات (Route Middleware)
-     */
+
     protected $routeMiddleware = [
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
@@ -43,14 +37,10 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        // أضف هذا السطر لتسجيل middleware الصلاحيات
 
    'checkadmin' => \App\Http\Middleware\CheckAdmin::class,
 ];
 
-    /**
-     * Middleware ذات الأولوية
-     */
     protected $middlewarePriority = [
         \Illuminate\Cookie\Middleware\EncryptCookies::class,
         \Illuminate\Session\Middleware\StartSession::class,

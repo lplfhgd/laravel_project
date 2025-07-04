@@ -15,26 +15,19 @@ class CategoryController extends Controller
 
     }
 
-    /**
-     * عرض قائمة التصنيفات
-     */
     public function index()
     {
         $categories = Category::paginate(10);
         return view('categories.index', compact('categories'));
     }
 
-    /**
-     * عرض نموذج إنشاء تصنيف
-     */
+
     public function create()
     {
         return view('categories.create');
     }
 
-    /**
-     * حفظ التصنيف الجديد
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -47,26 +40,19 @@ class CategoryController extends Controller
             ->with('success', 'تم إنشاء التصنيف بنجاح');
     }
 
-    /**
-     * عرض تصنيف محدد
-     */
     public function show(Category $category)
     {
         $tasks = $category->tasks()->paginate(10);
         return view('categories.show', compact('category', 'tasks'));
     }
 
-    /**
-     * عرض نموذج تعديل التصنيف
-     */
+
     public function edit(Category $category)
     {
         return view('categories.edit', compact('category'));
     }
 
-    /**
-     * تحديث التصنيف
-     */
+
     public function update(Request $request, Category $category)
     {
         $request->validate([
@@ -79,9 +65,7 @@ class CategoryController extends Controller
             ->with('success', 'تم تحديث التصنيف بنجاح');
     }
 
-    /**
-     * حذف التصنيف
-     */
+
     public function destroy(Category $category)
     {
         $category->delete();

@@ -17,12 +17,10 @@ class TaskController extends Controller
 
     public function index()
     {
-        $tasks = Task::with('category')
-            ->where('user_id', Auth::id()) // عرض مهام المستخدم فقط
-            ->latest()
-            ->paginate(10);
+$tasks = Task::with(['category', 'comments.user'])->latest()->paginate(10);
+// الآن كل المستخدمين يشوفوا كل المهام
+return view('tasks.index', compact('tasks'));
 
-        return view('tasks.index', compact('tasks'));
     }
 
     public function create()
@@ -61,10 +59,10 @@ class TaskController extends Controller
     }
 
     public function edit(Task $task)
-    {
-        if ($task->user_id !== Auth::id()) {
-            abort(403, 'ليس لديك صلاحية لتعديل هذه المهمة.');
-        }
+    {if (auth::user()->role->name !== 'Admin' && $task->user_id !== auth::id()) {
+    abort(403, 'غير مسموح لك تعديل أو حذف هذه المهمة');
+}
+
 
         $categories = Category::all();
         return view('tasks.edit', compact('task', 'categories'));
@@ -72,9 +70,9 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
-        if ($task->user_id !== Auth::id()) {
-            abort(403, 'ليس لديك صلاحية لتحديث هذه المهمة.');
-        }
+       if (auth::user()->role->name !== 'Admin' && $task->user_id !== auth::id()) {
+    abort(403, 'غير مسموح لك تعديل أو حذف هذه المهمة');
+}
 
         $validated = $request->validate([
             'title' => 'required|max:255',
@@ -95,9 +93,10 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
-        if ($task->user_id !== Auth::id()) {
-            abort(403, 'ليس لديك صلاحية لحذف هذه المهمة.');
-        }
+        if (auth::user()->role->name !== 'Admin' && $task->user_id !== auth::id()) {
+    abort(403, 'غير مسموح لك تعديل أو حذف هذه المهمة');
+}
+
 
         $task->comments()->delete();
         $task->delete();

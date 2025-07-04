@@ -8,17 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /**
-     * عرض نموذج تسجيل الدخول
-     */
+
     public function create()
     {
         return view('auth.login');
     }
 
-    /**
-     * معالجة طلب تسجيل الدخول
-     */
+
     public function store(Request $request)
     {
         $credentials = $request->validate([
@@ -38,9 +34,7 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
-    /**
-     * تسجيل الخروج
-     */
+
     public function destroy(Request $request)
     {
         Auth::logout();

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -13,9 +13,6 @@ class CommentController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * حفظ تعليق جديد
-     */
     public function store(Request $request, Task $task)
     {
         $request->validate([
@@ -24,15 +21,13 @@ class CommentController extends Controller
 
         $task->comments()->create([
             'content' => $request->content,
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
         ]);
 
         return back()->with('success', 'تم إضافة التعليق بنجاح');
     }
 
-    /**
-     * تحديث التعليق
-     */
+
     public function update(Request $request, Comment $comment)
     {
         $this->authorize('update', $comment);
@@ -46,9 +41,7 @@ class CommentController extends Controller
         return back()->with('success', 'تم تحديث التعليق بنجاح');
     }
 
-    /**
-     * حذف التعليق
-     */
+
     public function destroy(Comment $comment)
     {
         $this->authorize('delete', $comment);
