@@ -18,7 +18,7 @@ class TaskController extends Controller
     public function index()
     {
 $tasks = Task::with(['category', 'comments.user'])->latest()->paginate(10);
-// الآن كل المستخدمين يشوفوا كل المهام
+
 return view('tasks.index', compact('tasks'));
 
     }
