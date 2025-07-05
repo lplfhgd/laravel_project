@@ -13,15 +13,17 @@ return new class extends Migration {
             $table->text('description');
             $table->text('long_description')->nullable();
             $table->dateTime('due_date');
-            $table->enum('status', ['new', 'in_progress', 'completed', 'postponed'])->default('new');
-            $table->foreignId('category_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->enum('status', ['in_progress', 'completed', 'postponed'])->default('in_progress');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tasks');
+        Schema::enableForeignKeyConstraints();
     }
 };

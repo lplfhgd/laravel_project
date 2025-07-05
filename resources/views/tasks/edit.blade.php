@@ -64,7 +64,6 @@
             <label for="status" class="block text-gray-700 mb-2">الحالة</label>
             <select id="status" name="status"
                     class="w-full px-4 py-2 border rounded-lg @error('status') border-red-500 @enderror" required>
-                <option value="new" @selected(old('status', $task->status) == 'new')>جديدة</option>
                 <option value="in_progress" @selected(old('status', $task->status) == 'in_progress')>قيد التنفيذ</option>
                 <option value="completed" @selected(old('status', $task->status) == 'completed')>منتهية</option>
                 <option value="postponed" @selected(old('status', $task->status) == 'postponed')>مؤجلة</option>

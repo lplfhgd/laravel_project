@@ -29,25 +29,28 @@ return view('tasks.index', compact('tasks'));
         return view('tasks.create', compact('categories'));
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'long_description' => 'nullable',
-            'due_date' => 'required|date|after:now',
-            'category_id' => 'required|exists:categories,id',
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'long_description' => 'nullable|string',
+        'due_date' => 'required|date',
+        'category_id' => 'required|exists:categories,id',
+    ]);
 
-        $validated['user_id'] = Auth::id();
-        $validated['status'] = 'new';
-        $validated['due_date'] = Carbon::parse($validated['due_date']);
+    Task::create([
+        'title' => $request->title,
+        'description' => $request->description,
+        'long_description' => $request->long_description,
+        'due_date' => $request->due_date,
+        'category_id' => $request->category_id,
+        'user_id' => auth::id(),
+    ]);
 
-        Task::create($validated);
+    return redirect()->route('tasks.index')->with('success', 'تم إنشاء المهمة بنجاح!');
+}
 
-        return redirect()->route('tasks.index')
-            ->with('success', 'تم إنشاء المهمة بنجاح');
-    }
 
 public function show(Task $task)
 {

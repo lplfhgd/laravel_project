@@ -9,6 +9,10 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $attributes = [
+        'status' => 'in_progress',
+    ];
+
     protected $fillable = [
         'title',
         'description',
