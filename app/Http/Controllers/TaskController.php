@@ -49,14 +49,11 @@ return view('tasks.index', compact('tasks'));
             ->with('success', 'تم إنشاء المهمة بنجاح');
     }
 
-    public function show(Task $task)
-    {
-        if ($task->user_id !== Auth::id()) {
-            abort(403, 'ليس لديك صلاحية للوصول إلى هذه المهمة.');
-        }
+public function show(Task $task)
+{
+    return view('tasks.show', compact('task'));
+}
 
-        return view('tasks.show', compact('task'));
-    }
 
     public function edit(Task $task)
     {if (auth::user()->role->name !== 'Admin' && $task->user_id !== auth::id()) {
